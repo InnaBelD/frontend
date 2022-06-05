@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Администрирование</title>
+  <%- include('../partials/head'); %>
+    <%- include('../partials/head_p'); %>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+            /* background-color: rgb(122, 219, 249); */
+        }
+        /* .btn{
+            color: rgb(0, 0, 0);
+            background: #31d2f2;
+            border-color: #31d2f2;
+        } */
+
+
+        .btn-group {
+            /* margin-top: 2%; */
+            margin-left: 40%;
+            /* margin-bottom: 2%; */
+            display: inline-block;
+        }
+         .new{
+          width: 100%;
+          margin-top: 2%;
+          margin-bottom: 4%;
+         }
+
+        @-moz-keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        @-webkit-keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        @keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+  .throbber-loader:not(:required) {
+    -moz-animation: throbber-loader 2000ms 300ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 300ms infinite ease-out;
+    animation: throbber-loader 2000ms 300ms infinite ease-out;
+    background: #dde2e7;
+    display: inline-block;
+    position: relative;
+    text-indent: -9999px;
+    width: 0.9em;
+    height: 1.5em;
+    margin: 0 1.6em;
+  }
+  .throbber-loader:not(:required):before, .throbber-loader:not(:required):after {
+    background: #dde2e7;
+    content: '\x200B';
+    display: inline-block;
+    width: 0.9em;
+    height: 1.5em;
+    position: absolute;
+    top: 0;
+  }
+  .throbber-loader:not(:required):before {
+    -moz-animation: throbber-loader 2000ms 150ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 150ms infinite ease-out;
+    animation: throbber-loader 2000ms 150ms infinite ease-out;
+    left: -1.6em;
+  }
+  .throbber-loader:not(:required):after {
+    -moz-animation: throbber-loader 2000ms 450ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 450ms infinite ease-out;
+    animation: throbber-loader 2000ms 450ms infinite ease-out;
+    right: -1.6em;
+}
+.namee{
+    font-weight: bold;
+}
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header' , {role: role}); %>
+</header>
+
+<main>
+    <h3>Возможности администратора</h3>
+    <div class="container">
+        <div class="row rang first">
+            <div class="row rang">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-6">
+                </div>        
+                <div class="col-sm-3 ">
+                </div>          
+              </div>
+          <div class="row rang">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                
+              <a href="/users"> 
+                <h4 class="name_supply" align="center"> Пользователи
+                </h4>
+              </a>
+            </div>        
+            <div class="col-sm-3 ">
+            </div>          
+          </div>
+          <div class="row rang">
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-6">
+                
+              <a href="/save_list_for_admin"> 
+                <h4 class="name_supply" align="center"> Сохраненные списки поставщиков
+                </h4>
+              </a>
+            </div>        
+            <div class="col-sm-3 ">
+            </div>          
+          </div>
+        </div>
+    </div>
+    <br>
+
+    <div style="padding: 10px">
+      <button class="btn-primary btn view showFac" data-bs-toggle="collapse" data-bs-target="#collapsePassword" aria-expanded="false" id="necessary">
+        Изменить коэффициенты факторов поиска?</button>
+    </div>
+    <div class="collapse" id="collapsePassword">
+      <form id="passForm" >
+        <div class="container ">
+        <h3>
+          Факторы поиска:
+      </h3>
+      <div class="row" id="factors" >
+        <div class="col-xs-8">
+          <p class="namee">Название фактора</p> 
+        </div>
+        <div class="col-xs-2">
+            <p class="namee">Коэффициент (вес) фактора</p>
+        </div>
+        <div class="col-xs-2">             
+            <p class="namee">Видимость фактора для расчета ранга</p>
+        </div>
+        <br>
+          <div class="col-xs-8">
+              Цена
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[6]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Реестр недобросовестных поставщиков
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[3]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Банкротство/ликвидация
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[0]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Соответствие объему закупки
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[1]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Способ поставки
+          </div>
+          <div class="col-xs-2">
+              <input type="number"  class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[9]. value %>>
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Наличие истории закупок за 3 года
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[5]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Конфликт интересов
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value="1" >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Субъект малого предпринимательства
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[8]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Сроки поставки
+          </div>
+          <div class="col-xs-2">
+              <input type="number" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[2]. value %>  >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch" >
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Деловая репутация
+          </div>
+          <div class="col-xs-2">
+              <input type="number" id="changer" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[7]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+  
+          <div class="col-xs-8">
+              Производитель
+          </div>
+          <div class="col-xs-2">
+              <input type="number" id="changer" class="form-control one fac" min="0" max="1" step="0.01" value=<%= koefs[4]. value %> >
+          </div>
+          <div class="col-xs-2">
+              <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider round"></span>
+                </label>
+          </div>
+      </div>
+    </div>
+        <div style="padding: 10px">
+          <button class="btn-primary btn view showFac" type="submit">Обновить коэффициенты факторов</button>
+        </div>
+      </form>
+    </div>
+    <% if(errorMes!= null && errorMes!= undefined) {%>     
+        <div class="alert alert-danger" role="alert">
+            Ошибка: <%= errorMes %> 
+        </div>
+        <% } %>
+
+    <% if(role == "admin") {%> 
+        
+      <div class="btn-group">
+        <div>
+          <button class="btn-primary btn view new" data-bs-toggle="collapse" data-bs-target="#collapseOKPD" aria-expanded="false">Обновить список ОКПД-2</button>
+        </div>
+
+        <div class="collapse" id="collapseOKPD">
+            <br>
+            <div class="row">
+                <div class="col-sm-3 text-center">
+                    <br>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <div class="throbber-loader"></div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <br>
+                </div>
+            </div>
+            <br> 
+        </div>
+        <div>
+          <button class="btn-primary btn view new" data-bs-toggle="collapse" data-bs-target="#collapseProv" aria-expanded="false">Обновить информацию о поставщиках</button>
+        </div>
+        <div class="collapse" id="collapseProv">
+            <br>
+            <div class="row">
+                <div class="col-sm-3 text-center">
+                    <br>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <div class="throbber-loader"></div>
+                </div>
+                <div class="col-sm-3 text-center">
+                    <br>
+                </div>
+            </div>
+            
+        </div>
+
+      </div>
+      <% } %>
+
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+<script>
+    let inputTextContainer = document.getElementsByClassName('fac');
+    let inputCheckContainer = document.getElementsByClassName('switch');
+    let childCheckbox;
+
+for(let i = 0; i < inputCheckContainer.length; i++)
+{
+      inputCheckContainer[i].addEventListener('click', function (event) {
+      childCheckbox = inputCheckContainer[i].children[0];
+
+      if(childCheckbox.checked)
+      {
+          inputTextContainer[i].disabled = false;
+      }
+      else
+      {
+          inputTextContainer[i].disabled = true;
+      }
+  });
+}
+</script>
+</body>
+</html>

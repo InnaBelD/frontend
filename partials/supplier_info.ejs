@@ -1,0 +1,31 @@
+<div class="row rang sip">
+  <div class="col-sm-1">
+      <input type="checkbox" class="galka2" 
+      data-email=<%- JSON.stringify({ email:provider.email, namesupply: provider.name, fio:provider.director.surname+" "+provider.director.name})  %> >
+  </div>
+  <div class="col-sm-3">      
+      <h4 class="name_supply"> <%= provider.name %> ООО ТК "ТРАКТ СЕРВИС"
+      </h4>
+  </div>
+  <div class="col-sm-4 ">      
+      <h4 class="name_prod"> <%= provider.product.productId %>
+          Труба стальная электросварная круглая</h4>
+  </div>
+  <div class="col-sm-2 ">
+     <h4 class="price_suply"> <%= provider.product.price %> </h4> 97 503,33 р/Тонна
+  </div>
+  <div class="col-sm-1 ">
+      <h4 class="rang_suply"> <%= provider.rank %>2.13 </h4>
+  </div>
+  <div class="col-sm-1 text-center">
+      <a href="/provider" type="button" class="btn-primary btn"> 
+          <span class="glyphicon glyphicon-info-sign"></span> 
+        </a>
+  </div>
+</div>
+
+<% if(providers != null) { %>
+    <% providers.forEach(function(provider){  %>
+    <%- include('../partials/supplier_info', {provider:provider}); %>
+    <% }); %>
+    <%} %>

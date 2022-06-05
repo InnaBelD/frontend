@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Аккаунт</title>
+  <%- include('../partials/head'); %>
+    <%- include('../partials/head_p'); %>
+   
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+            /* background-color: rgb(122, 219, 249); */
+        }
+
+        .info_about {
+            width: 50%;
+            margin: auto;
+        }
+
+        .showOrder{
+            width: 30%;
+        }
+
+
+        .save{
+          width: 30%;
+        }
+        .order{
+        /* margin-top: 20px;
+        margin-bottom: 20px;*/
+        margin-left: 20%; 
+        width: 60%;
+
+        /* border: 2px solid rgb(154, 180, 142);
+        background-color: rgb(181, 201, 172); */
+      }
+
+      .ord{
+        margin-top: 20px;
+        margin-bottom: 20px; 
+      }
+      .costs{
+        border: solid #478fca;
+        text-align: center;
+      }
+      .lis,.lis_tr {
+            padding: 3px;
+            border: 2px solid #478fca;
+
+        }
+      .namee{
+            font-weight: bold;
+      }
+      .alert{
+        text-align: center;
+      }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+  <div class="main">
+    <h3>Личный кабинет</h3>
+    <% if(errorMes!= null && errorMes!= undefined) {%>     
+      <div class="alert alert-danger" role="alert">
+          Ошибка: <%= errorMes %> 
+      </div>
+      <% } %>
+    <form id="acc1" action="/account1" method="post">
+      <table class="info_about">
+        <tr>
+          <th style="padding: 20px" class="forUser">Фамилия★
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="Фамилия" name="surname" minlength="3"
+                value=<%= nameUser.surname %>></input>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Имя★
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="Имя" name="name" minlength="1"
+                value=<%= nameUser.name %>></input>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Отчество★
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="Отчество" name="patronimic" minlength="0"
+                value=<%= nameUser.patronimic %>></input>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th style="padding: 20px" class="forUser" colspan="3">Наименование организации
+            <div style="padding-top: 10px">
+              <% let k =  ""; 
+                  let d = nameUser.company.companyName;
+                  for(let i=0; i<d.length;i++){
+                    if(d[i]== '"'){
+                      k+='\'\''
+                    }
+                    else k+=d[i]
+                    
+                  }
+                    %>
+              <input class="form-control me-2" name="companyName" placeholder="Полное наименование организации"
+                value=<%- '"' + k + '"' %> />
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th style="padding: 20px" class="forUser" colspan="3">Юридический адрес
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" name="companyAddress" placeholder="Юридический адрес"
+                value=<%- '"' + nameUser.company.address + '"' %> />
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th style="padding: 20px" class="forUser">ИНН
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="ИНН" name="companyInn" pattern="[0-9]{12}"
+                value=<%= nameUser.companyInn %>></input>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Почта★
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" type="email" name="email" placeholder="Ваша почта"
+                value=<%= nameUser.email %> />
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Телефон★
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="+7XXXXXXXXXX" name="phone" pattern="\+7[0-9]{10}"
+                value=<%= nameUser.phone %>></input>
+            </div>
+          </th>
+        </tr>
+      </table>
+      <div class="container">
+      <div class="alert alert-info">
+        <strong>★</strong> -  данные, которые возможно поменять
+      </div>
+    </div>
+      <div style="padding: 10px">
+        <button class="showOrder btn-primary btn view" type="submit" onclick="post_info()">
+          Изменить данные пользователя</button>
+      </div>
+
+    </form>
+
+    <div style="padding: 10px">
+      <button class="showOrder btn-primary btn view" data-bs-toggle="collapse" data-bs-target="#collapsePassword" aria-expanded="false" id="necessary">
+        Сменить пароль?</button>
+    </div>
+
+    <div class="collapse" id="collapsePassword">
+      <form id="changePasswordForm" action="/account" method="post">
+        <table class="info_about">
+          <tr>
+            <th style="padding: 20px" class="forUser">Старый пароль</th>
+            <th class="forUser">
+              <input name="password" type="password" class="form-control me-2" placeholder="Старый пароль"  
+                class="validate" required></input>
+            </th>
+          </tr>
+          <tr>
+            <th style="padding: 20px" class="forUser">Новый пароль</th>
+            <th class="forUser">
+              <input name="newPassword" type="password" class="form-control me-2" placeholder="Новый пароль" minlength="6" id="newPassword"
+                class="validate"  required></input>
+            </th>
+          </tr>
+          <tr>
+            <th style="padding: 20px" class="forUser">Подтвердите новый пароль</th>
+            <th class="forUser">
+              <input type="password" class="form-control me-2" placeholder="Подтвердите новый пароль" class="validate"
+                id="confirmPassword" name="new_password" required></input>
+            </th>
+          </tr>
+        </table>
+        <div style="padding: 10px">
+          <button type="submit" class="save btn-primary btn view" id="save-pass">Сохранить новый пароль</button>
+        </div>
+      </form>
+    </div>
+
+    <div style="padding: 10px">
+      <button class="showOrder btn-primary btn view" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false">Просмотр подборок</button>
+    </div>
+
+    <div class="collapse" id="collapseExample">
+      <div class="order">
+        <div class="row rang first ord">
+          <div class="col-sm-2 ">
+            <p>№ подборки</p>
+          </div>
+          <div class="col-sm-7 ">
+            <p>Название подборки</p>
+          </div>
+          <div class="col-sm-3 ">
+            <p>Дата создания</p>
+          </div>
+        </div>
+        <%- include('../partials/elem_list.ejs'); %>
+      </div>
+    </div>
+
+    <div style="padding: 10px">
+      <button class="btn-primary btn view showFac showOrder" data-bs-toggle="collapse" data-bs-target="#collapseKandF" aria-expanded="false" id="necessary">
+        Посмотреть факторы поиска и коэффициенты</button>
+    </div>
+
+    <div class="collapse" id="collapseKandF">
+      <form>
+        <div class="container ">
+          <h3>
+            Факторы поиска и их коэффициенты:
+          </h3>
+          <br>
+          <div class="row" id="factors" >
+            <div class="col-xs-8">
+              <p class="namee">Название фактора</p> 
+            </div>
+            <div class="col-xs-2">
+                <p class="namee">Коэффициент (вес) фактора</p>
+            </div>
+            <div class="col-xs-2">             
+                <p class="namee"></p>
+            </div>
+
+          <div class="row" id="factors">
+            <div class="col-xs-8">
+              <!-- koefs[6].name %>  -->
+              Цена
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[6]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+<!-- activ -->
+            <div class="col-xs-8">
+              <!--  koefs[3].name %> -->
+              Реестр недобросовестных поставщиков
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[3]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+              <!--  koefs[0].name %>  -->
+              Банкротство/ликвидация
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[0]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+               <!-- koefs[1].name %> -->
+              Соответствие объему закупки
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[1]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+               <!-- koefs[9].name %> -->
+              Способ поставки
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[9]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+               <!-- koefs[5].name %>  -->
+              Наличие истории закупок за 3 года
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[5]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">            
+              Конфликт интересов
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value="0.7" disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+               <!-- koefs[8].name  -->
+              Субъект малого предпринимательства
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[8]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+               <!-- koefs[2].name %>  -->
+              Сроки поставки
+            </div>
+            <div class="col-xs-2">
+              <input type="text" class="form-control one fac" value=<%= koefs[2]. value %> disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+             <!-- koefs[7].name %>  -->
+              Деловая репутация
+            </div>
+            <div class="col-xs-2">
+              <input type="text" id="changer" class="form-control one fac" value=<%= koefs[7]. value %>
+                disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+
+            <div class="col-xs-8">
+              <!-- koefs[4].name %> -->
+              Производитель
+            </div>
+            <div class="col-xs-2">
+              <input type="text" id="changer" class="form-control one fac" value=<%= koefs[4]. value %>
+                disabled>
+            </div>
+            <div class="col-xs-2">
+              <label class="switch">
+                  <input ><span ></span></label>
+            </div>
+      </form>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+<script>
+  function post_info(){
+    document.forms.acc1.submit();
+  }
+</script>
+<script >
+  let newPass = document.getElementById('newPassword');
+  let confPass = document.getElementById('confirmPassword');
+  let passForm = document.getElementById('changePasswordForm');
+  let savePassBtn = document.getElementById('save-pass');
+
+  function savePass(e){
+      if(newPass.value === confPass.value){
+          console.log('1111');
+          passForm.submit();
+      }
+      else{
+        console.log('222');
+          alert("Пароли не совпадают!");
+      }
+  }
+  savePassBtn.addEventListener('click', savePass);
+</script>
+</body>
+</html>

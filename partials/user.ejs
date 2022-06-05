@@ -1,0 +1,50 @@
+<div class="row rang row1 row2">
+    <div class="col-sm-1 pos1">
+      <h4 class="surname "> <%= users.surname %> </h4>
+    </div>
+    <div class="col-sm-1 pos">        
+        <h4 class="name"><%= users.name %> </h4>
+    </div>
+
+    <div class="col-sm-2 pos">
+       <h4 class="patronimic"> <%= users.patronimic %> </h4>
+    </div>
+    <div class="col-sm-2 pos">
+        <% let k =  ""; 
+        let d = users.companyName;
+        for(let i=0; i<d.length;i++){
+          if(d[i]== '"'){
+            k+='\'\''
+          }
+          else k+=d[i]
+          
+        }
+          %>
+        <h4 class="companyName"> <%=  k %> </h4>
+     </div>
+    <div class="col-sm-2 pos">
+        <h4 class="email"> <%= users.email %> </h4>
+     </div>
+     <div class="col-sm-2 pos">
+        <h4 class="phone">  
+            +74952244400 
+        </h4>
+     </div>
+<form action="/users" method="post">
+    <input hidden value=<%= users.id %> name="changingId" >
+     <div class="col-sm-1 pos">
+        <%  if(users.role == "admin" || users.role == "moderator") {%> 
+                <!-- Админ или нет -->
+                <h4><input type="checkbox" id="check2" name="is_admin" checked="true">
+                    <label for="check2">Модер</label></h4>
+        <% } else{ %> 
+            <h4><input type="checkbox" id="check2" name="is_admin" >
+                <label for="check2">Модер</label></h4>
+        <% } %> 
+     </div>
+     <div class="col-sm-1 pos">
+            <button type="submit" class="save btn-primary btn"> Сохранить</button> 
+     </div>
+</form>
+</div>
+

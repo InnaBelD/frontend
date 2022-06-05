@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Подборка</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+            /* background-color: rgb(122, 219, 249); */
+        }
+
+        .showOrder{
+            margin-left: 40%;
+            
+        }
+
+        /* .btn{
+            color: rgb(0, 0, 0);
+            background: #31d2f2;
+            border-color: #31d2f2;
+        } */
+
+        /* .info_about {
+            width: 50%;
+            margin: auto;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            border: solid #478fca;
+            text-align: center;
+        }
+
+        TD,TH {
+            padding: 3px;
+            border: 2px solid #478fca;
+        }*/
+        .row1{
+            margin-top: 1%;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 1%;
+        } 
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>  
+    
+    <h3>Сохраненный список 1</h3>
+    <div class="row row1">
+        <div class="row rang first">
+            <div class="col-sm-4 ">
+                <p>поставщик</p>
+            </div>
+            <div class="col-sm-4 ">
+                <p>товар</p>
+            </div>
+            <div class="col-sm-2 ">
+                <p>цена, р</p> 
+            </div>
+            <div class="col-sm-1 ">
+                <p>ранг</p>
+            </div>
+            <div class="col-sm-1 ">
+                <p>подробнее</p>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-md-6 col-sm-12"> -->
+            <%- include('../partials/save_supplier_info'); %>
+            <!-- </div> -->
+    </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+</body>
+</html>

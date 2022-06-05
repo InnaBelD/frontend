@@ -1,0 +1,113 @@
+<!-- <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand"> АИС "Закупки" </a>
+        <a class="search navbar-brand" href="/">Главная: начать поиск</a>
+
+        <div class="navbar-nav mb-2 mb-lg-0">
+            <a class="nav-link" href="/admin">Для администратора</a>
+            <a class="nav-link" href="/account">Личный кабинет</a>
+            <a class="nav-link" href="/login">Выход</a>
+        </div>
+    </div>
+</nav> -->
+ 
+        
+        <!--<div class = "headertext">Главная</div>
+        <div class = "headertext">ОКПД2</div>
+        <div class = "headertext">ОКВЭД2</div>
+        <div class = "headertext">ОЕКИ</div>-->
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header" style="margin-right: -1000px">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              <a class="navbar-brand" href="/">
+                <span class="logo">Закупки</span>
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="main nav navbar-nav navbar-right">
+              <li><a class="nav-link" href="/">Главная</a></li>
+              <!-- <li><a href="#">ОКПД2</a></li> -->
+              <% if(role == "admin" || role == "moderator") {%> 
+              <li><a class="nav-link" href="/admin">Для администратора</a></li>
+              <% } %>
+              <% if(role != null) {%> 
+              <li><a class="nav-link" href="/account"> <span class="glyphicon glyphicon-user"></span> Личный кабинет</a></li>
+              <li><a class="nav-link" href="/logout">Выход</a></li>
+              <% } else { %>
+              <li><a class="nav-link" href="/login">Вход</a></li>
+              <% } %>
+            </ul>
+          </div>
+          </div>
+        </nav>
+        
+  
+
+<style>
+  /* .search{
+    margin-left: 15%;
+  }
+  .navbar {
+    background-color: rgb(122, 219, 249);
+  }
+
+  .container-fluid {
+    background-color: rgb(122, 219, 249);
+  }
+
+  .nav-link {
+    background-color: rgb(122, 219, 249);
+  } */
+
+  .navbar-brand > img {
+    width: 40px;
+    display: inline;
+    margin-top: -10px;
+}
+
+.navbar .navbar-nav > li > a {
+    color: #102B62;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.navbar-nav{
+  flex-direction: row;
+}
+.navbar .navbar-nav > li > a:hover {
+    color: #337ab7;
+}
+
+.navbar-brand {
+    margin-top: 10px;
+    
+}
+
+.navbar-header{
+  margin-right: -1000px;
+}
+
+.navbar-brand .logo{
+    font-size: 30px;
+    color: #102B62;
+    font-family: 'Montserrat', sans-serif;
+    margin-left: 5px;
+}
+
+.navbar {
+    background-color: #fff;
+    border: none;
+    border-bottom: 1px solid rgb(187, 187, 187);
+    box-shadow: 0 1px 2px rgb(187, 187, 187);
+    border-radius: 0;
+
+}
+
+
+</style>

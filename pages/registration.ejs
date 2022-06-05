@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Регистрация</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+
+body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+        .info_about {
+            width: 50%;
+            margin: auto;
+        }
+
+        .showOrder {
+          width: 40%;
+          margin-top: 2%;
+        }
+
+         .new{
+          width: 100%;
+          margin-top: 2%;
+          margin-bottom: 4%;
+         }
+
+         .reg{
+            margin-left: 49%;
+            margin-top: 1%;
+            color: #204d74;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+    <h3>Регистрация нового пользователя</h3>
+    <form id="changePasswordForm" action="/registration" method="post" >
+    <table class="info_about">
+        <tr>
+            <th style="padding: 20px" class="forUser">Фамилия
+              <div style="padding-top: 10px">
+                <input class="form-control me-2" placeholder="Фамилия" name="surname" minlength="3" required></input>
+              </div>
+            </th>
+            <th style="padding: 20px" class="forUser">Имя
+              <div style="padding-top: 10px">
+                <input class="form-control me-2" placeholder="Имя" name="name" minlength="1" required></input>
+              </div>
+            </th>
+            <th style="padding: 20px" class="forUser">Отчество
+              <div style="padding-top: 10px">
+                <input class="form-control me-2" placeholder="Отчество" name="patronimic" minlength="3" required></input>
+              </div>
+            </th>
+        </tr>
+
+        <tr>
+          <th style="padding: 20px" class="forUser" colspan="2">Наименование организации
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" name="companyName" placeholder="Полное наименование организации" required/>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">ИНН
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="ИНН" name="companyInn" pattern="[0-9]{12}" required></input>
+            </div>
+          </th>
+        </tr>
+          
+        <tr>
+          <th style="padding: 20px" class="forUser" colspan="2">Юридический адрес
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" name="companyAddress" placeholder="Юридический адрес"  required />
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Телефон
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" placeholder="+7XXXXXXXXXX" name="phone" pattern="\+7[0-9]{10}" required></input>
+            </div>
+          </th>
+        </tr>
+
+        <tr>
+          <th style="padding: 20px" class="forUser">Почта
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" name="email" placeholder="Ваша почта" type="email" required/>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Пароль
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" id ="newPassword" name="password" type="password" placeholder="Пароль не менее 6 знаков"  required/>
+            </div>
+          </th>
+          <th style="padding: 20px" class="forUser">Подтвердите пароль
+            <div style="padding-top: 10px">
+              <input class="form-control me-2" id="confirmPassword" name="ok_password" type="password" placeholder="Подтвердите пароль"  required/>
+            </div>
+          </th>
+        </tr>
+      </table>
+      <a class='aaa reg' href="/login">Вход</a>
+      <button class="btn-primary btn view showOrder" type="button" id="save-pass" >Зарегестрироваться</button>
+    </form>
+    <% if(errorMes!= null && errorMes!= undefined) {%>     
+      <div class="alert alert-danger" role="alert">
+          Ошибка: <%= errorMes %> 
+      </div>
+      <% } %>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+<script >
+  let newPass = document.getElementById('newPassword');
+  let confPass = document.getElementById('confirmPassword');
+  let passForm = document.getElementById('changePasswordForm');
+  let savePassBtn = document.getElementById('save-pass');
+
+  function savePass(e){
+      if(newPass.value === confPass.value){
+          console.log('1111');
+          passForm.submit();
+      }
+      else{
+        console.log('222');
+          alert("Пароли не совпадают!");
+      }
+  }
+  savePassBtn.addEventListener('click', savePass);
+</script>
+</body>
+</html>

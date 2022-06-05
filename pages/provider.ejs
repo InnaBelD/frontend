@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Поставщик</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+            /* background-color: rgb(122, 219, 249); */
+        }
+        .nameproduct, .region, .zagabout, .tel {
+    color: #4088BC;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.param {
+    font-weight: bold;
+    color: #BC4F40;
+}
+
+.flex h4, h3 {
+    color: #102B62;
+}
+
+.fio {
+    color: #102B62;
+    font-weight: bold;
+}
+
+.problems  {
+    list-style: none !important;
+    
+    list-style-position: outside
+}
+
+.problems li {
+    margin-left: -40px;
+}
+
+.glyphicon-remove-sign {
+    color: #4088BC;
+    font-size: 16px;
+}
+
+.glyphicon-ok-sign {
+    color: #BC4F40;
+    font-size: 16px;
+}
+
+.bg2 {
+    background-color: #fff;
+    border-radius: 15px;
+    height: 400px;
+}
+
+.glyphicon-plus-sign {
+    color: rgb(45, 175, 45);
+    font-size: 16px;
+}
+
+.view3 {
+    background: #102B62;
+    color: #fff;
+    padding: 5px;
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+    <div class="container">
+        <h3>ООО ТК "ТРАКТ СЕРВИС"</h3>
+        <h4 class="nameproduct">Труба стальная электросварная круглая</h3>
+        <p>ОКПД2 24.20.13.130</p>
+        <p>Регион: <span class="region"> Ярославская обл. </span></p>
+        <!-- <p>Источник:  <a class="istok" href="https://otc.ru/marketplace-b2b/offer/truba-stalnaya-elektrosvarnaya-kruglaya/22044310">https://otc.ru</a>   </p>    -->
+    </div>
+    <div class="container-fluid bg1">
+        <div class="container ">
+            <div class="flex">
+                <h4>
+                    <span class="glyphicon glyphicon-ruble"></span>
+                    Цена: 
+                     <span id="priceprod" class="param">97 503,33</span></h4>
+                <h4>
+                    <span class="glyphicon glyphicon-scale"></span>
+                    Количество: 
+                    <span id="kolprod" class="param">100</span></h4>
+                <h4>
+                    <span class="glyphicon glyphicon-star"></span>
+                    Рейтинг: 
+                    <span id="rangprod" class="param">2.13</span></h4>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="zagabout">ИНН/КПП </p>
+                <p class="inntext">3663030020 /
+                    366301001 </p>
+                    <br><br>
+                    <p class="zagabout">ОГРН </p>
+                <p class="ogrn">1033600049670 </p>
+            </div>
+            <div class="col-sm-6">
+                <p class="fio">Маркосян Арсен Жораевич</p> 
+                <p class="email" >trakt-servis.torg@mail.ru</p>
+                <p class="tel">+79103416954 <br>
+                    +74732256950 <br>
+                    +74732256955</p>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container-fluid bg1">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                    <h3 class="view3 text-left">Критерии оценки надежности
+                    </h3>
+                    <label>Все </label>
+                    <label class="switch2">
+                        <input type="checkbox" id="galka2" >
+                        <span class="slider2 round"></span>
+                    </label>
+                    <label> Только проблемные</label>
+                    <br><br>
+                    <ul class="problems" id="no">
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Наличие сведений в реестре банкротств
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Статус (состояние) Контрагента: «Ликвидировано/находится в состоянии ликвидации/преобразования»
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Исполнительный орган – дисквалифицированное лицо
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Наличие Контрагента в реестре недобросовестных поставщиков по 44-ФЗ или 223-ФЗ
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Наличие (сумма по исполнительным листам более 25% от валюты баланса) Контрагента в реестре должников ФССП
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Наличие 2 и более отклонений в текущем квартале по 2-м частям на той же этп по 44-ФЗ, что в заявке
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Возраст компании – менее 6 месяцев
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon glyphicon-remove-sign"></span>
+                            По данным ФССП имеется задолженность по уплате налогов превышающая 1000 рублей
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-remove-sign"></span>
+                            Имеются блокировки по расчетным счетам
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4 bg2">
+                    <h3>Дополнительные критерии
+                    </h3>
+                    <p>Выполненные контракты: <span class="param"> 26 </span> </p> 
+                    <ul class="problems"> 
+                       
+                        <li>
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            Наличие истории
+                        </li>
+                        <li>
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                            Деловая репутация
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container">
+    <button type="button" class="btn-primary btn " data-toggle="modal" data-target="#exampleModal"> 
+        <span class="glyphicon glyphicon-floppy-saved"></span> Сохранить в подборку</button>
+    
+    
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Сохранить поставщика в подборку
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </h5>
+          </div>
+          <div class="modal-body">
+            <div class="order">
+                <div class="row rang first ord">
+                  <div class="col-sm-7 ">
+                      <p>Название списка</p>
+                  </div>
+                  <div class="col-sm-2 ">
+                      <p>Выбрать</p>
+                  </div>
+                  <div class="col-sm-3 ">
+                      <p>Сохранить</p>
+                  </div>
+                </div>            
+                 <%- include('../partials/name.ejs'); %>          
+              </div>
+         
+    
+          <br><br>
+          <div class="order">
+              <div class="row rang">
+                  <div class="col-sm-4 ">
+                      <h4> Новый список </h4>
+                  </div>
+                  <div class="col-sm-5 ">
+                      <input class="form-control me-2" name="listName" placeholder="Введите название списка" />
+                  </div>
+                  <div class="col-sm-3 ">
+                      <button type="submit" class="save btn-primary btn"> Сохранить</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            <!--  <button type="button" class="btn btn-primary">Сохранить</button>-->
+          </div>
+        </div>
+      </div>
+    </div>    
+    
+    <button type="button" class="btn-primary btn view2 emaaaaaaail" data-toggle="modal" data-target="#exampleModal2" >
+        <span class="glyphicon glyphicon-list-alt"></span> Отправить заявку выбранным поставщикам
+    </button>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Отправка приглашения на участие в тендере
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button> </h5>
+                </div>
+                <div class="modal-body email_body">
+                    <a href="mailto: trakt-servis.torg@mail.ru">trakt-servis.torg@mail.ru</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+<script>
+
+    function onclickMir(){
+        if (galka2.checked==true){
+                        no.style.display="none";
+                   }
+        else {
+            no.style.display="block";
+        }
+          }
+    
+    
+          galka2.addEventListener("click", onclickMir)
+           
+        </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Вход</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .buy {
+            width: 20%;
+            margin-left: 41%;
+            margin-top: 2%;
+        }
+        .login {
+            padding: 20px;
+        }
+
+        .input-field {
+            padding: 20px;
+        }
+
+
+        label{
+            color: #333;
+        }
+
+        .reg{
+            margin-left: 48%;
+            margin-top: 2%;
+            color: #204d74;
+        }
+        h4{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+    <h3>Вход</h3>
+    <form class="form form-login" action="/login" method="post">
+        <table align="center">
+            <tr>
+                <th>
+                    <label htmlFor="email" class="login">Логин</label>
+                </th>
+                <th>
+                    <input type="email" name="email" class="validate form-control me-2" required placeholder="email"/>
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <label htmlFor="password" class="login">Пароль</label>
+                </th>
+                <th>
+                    <input type="password" name="password" class="validate form-control me-2" required placeholder="пароль"/>
+                </th>
+            </tr>
+        </table>
+        <br>
+        <a class='aaa reg' href="/registration">Регистрация</a>
+        <div>
+            <button class="btn-primary btn view buy" type="submit">Войти</button>
+        </div>
+    </form>
+
+    <% if(errorMes!= null && errorMes!= undefined) {%>     
+    <div class="alert alert-danger" role="alert">
+        Ошибка: <%= errorMes %> 
+    </div>
+    <% } %> 
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+</body>
+</html>

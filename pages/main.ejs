@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Закупки</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+        @-moz-keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        @-webkit-keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        @keyframes throbber-loader {
+            0%  {background: #dde2e7;}
+            10% {background: #6b9dc8;}
+            40% {background: #dde2e7;}
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+  .throbber-loader:not(:required) {
+    -moz-animation: throbber-loader 2000ms 300ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 300ms infinite ease-out;
+    animation: throbber-loader 2000ms 300ms infinite ease-out;
+    background: #dde2e7;
+    display: inline-block;
+    position: relative;
+    text-indent: -9999px;
+    width: 0.9em;
+    height: 1.5em;
+    margin: 0 1.6em;
+  }
+  .throbber-loader:not(:required):before, .throbber-loader:not(:required):after {
+    background: #dde2e7;
+    content: '\x200B';
+    display: inline-block;
+    width: 0.9em;
+    height: 1.5em;
+    position: absolute;
+    top: 0;
+  }
+  .throbber-loader:not(:required):before {
+    -moz-animation: throbber-loader 2000ms 150ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 150ms infinite ease-out;
+    animation: throbber-loader 2000ms 150ms infinite ease-out;
+    left: -1.6em;
+  }
+  .throbber-loader:not(:required):after {
+    -moz-animation: throbber-loader 2000ms 450ms infinite ease-out;
+    -webkit-animation: throbber-loader 2000ms 450ms infinite ease-out;
+    animation: throbber-loader 2000ms 450ms infinite ease-out;
+    right: -1.6em;
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+    <div class="container">
+        <form class="navbar-form navbar-left" action="">
+            <div class="input-group">
+                <input type="text" id="inputSearch" class="form-control find" placeholder="Найти по имени или коду... ">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary findbtn" id="search-button" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <br /><br /> <br /> <br />
+
+
+            <input name="Okpd" type="text" id="input1" class="form-control reestr" value="Код ОКПД2" disabled>
+
+            <br /> <br />
+
+            <% function printOkpd(okpds){
+                let parentsStack = [];
+                let codeStack = [];
+
+                for (let i = 0; i < okpds.length; i++) {
+                    let href = '#' + (i + 1);
+                    if((okpds[i].parent != null ) && codeStack.length != 0 && codeStack[codeStack.length - 1] == okpds[i].parent){%>
+                    <ul class="collapse" id=<%- i %>>
+                <%          }
+            while(parentsStack.length != 0){
+                if(parentsStack[parentsStack.length - 1] == okpds[i].parent || codeStack[codeStack.length - 1] == okpds[i].parent)
+                    break;
+%>
+                    </ul>
+            <%  parentsStack.pop();}%>
+
+            <li> <a class='aaa' data-toggle="collapse" href=<%- href %>> <%- okpds[i].code %> - <%- okpds[i].name %></a>
+
+                <% codeStack.push(okpds[i].code);
+                    if(parentsStack[parentsStack.length - 1] != okpds[i].parent)
+                        parentsStack.push(okpds[i].parent);
+                    }}%>
+
+                <ul id="0">
+                    <% printOkpd(okpd2) %>
+                </ul>
+    </div>
+    <form id="shit">
+        <input name="userId" type="text" hidden value=<%= userId %> >
+        <input name="okpd2" type="text" id="input2"  hidden>
+        <div class="container-fluid bg1">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="zag">Цена:</p>
+                    <p>
+                        от
+                        <input type="number" class="form-control params one" min="0" placeholder="0" name="MinPrice">
+                        до
+                        <input type="number" class="form-control params one" min="1" placeholder="1000000"
+                            name="MaxPrice" required>
+                    </p>
+                    <label class="zag">Способ поставки:</label>
+                    <select class="form-control two" name="WayOfDestribution" id="">
+                        <option value="ed">единовременный</option>
+                        <option value="po">поэтапный</option>
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <p class="zag">Регион:</p>
+                    <select class="form-control two" name="Region" id="fss">
+                        <%- include('../partials/area.ejs'); %>
+                    </select>
+
+                    <div class="zag mar">Объём: <input type="number" name="Count" class="form-control params one"
+                            min="1" placeholder="20000" required>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+        <div class="container ">
+
+        <button href="#postvib" id="findp" type="button" class="btn-primary btn view" data-toggle="collapse" onclick="getSupliers()">
+            <span class="glyphicon glyphicon-search">
+            </span> Найти поставщиков
+        </button>
+    </div>
+</from>
+        <div class="container ">
+            <br><br>
+        <div id="postvib" class="collapse">
+            <div class="row">
+                <div class="col-sm-6 text-center">
+                    <br>
+                    <label>Наивысший ранг - 10</label>
+                </div>
+                <div class="col-sm-6 text-center">
+                    <label>Сортировать по</label>
+                    <select class="form-control two border" name="sort">
+                        <option value="rang" onclick="SortData('rang')">рангу</option>
+                        <option value="price" onclick="SortData('price')">цене</option>
+                    </select>
+                </div>
+            </div>
+            <br><br>
+            <div class="row rang first">
+                <div class="col-sm-1 ">
+                    <p>выбрать</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p>поставщик</p>
+                </div>
+                <div class="col-sm-4 ">
+                    <p>товар</p>
+                </div>
+                <div class="col-sm-2 ">
+                    <p>цена, р</p>
+                </div>
+                <div class="col-sm-1 ">
+                    <p>ранг</p>
+                </div>
+                <div class="col-sm-1 ">
+                    <p>подробнее</p>
+                </div>
+            </div>
+            <br id="lidd">
+                <div id="loader" class="row">
+                    <div class="col-sm-3 text-center">
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <div class="throbber-loader"></div>
+                    </div>
+                    <div class="col-sm-3 text-center">
+                        <br>
+                    </div>
+                </div>
+            <div id="sup">
+            </div>
+            <% if(role != null) {%> <br><br>
+            <button type="button" class="btn-primary btn " data-toggle="modal" data-target="#exampleModal">
+                <span class="glyphicon glyphicon-floppy-saved"></span> Сохранить в подборку
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Сохранить поставщика в подборку
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> </h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="order">
+                                <div class="row rang first ord">
+                                    <div class="col-sm-7 ">
+                                        <p>Название списка</p>
+                                    </div>
+                                    <div class="col-sm-2 ">
+                                        <p>Выбрать</p>
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <p>Сохранить</p>
+                                    </div>
+                                </div>
+                                <%- include('../partials/name.ejs'); %>
+                            </div>
+
+
+                            <br><br>
+                            <div class="order">
+                                <div class="row rang">
+                                    <div class="col-sm-4 ">
+                                        <h4> Новый список </h4>
+                                    </div>
+                                    <div class="col-sm-5 ">
+                                        <input class="form-control me-2" name="listName"
+                                            placeholder="Введите название списка" />
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <button type="submit" class="save btn-primary btn"> Сохранить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-primary btn view2" data-toggle="modal" data-target="#exampleModal2">
+                <span class="glyphicon glyphicon-list-alt"></span> Отправить заявку выбранным поставщикам
+            </button>
+            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Отправка приглашения на участие в тендере
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button> </h5>
+                        </div>
+                        <div class="modal-body email_body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+        </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+<script>
+    let j = 0;
+async function getSupliers(){
+    formData = new FormData(document.forms.shit);
+    let okpd2 = formData.get("okpd2");
+    okpd2 = okpd2.trim(" ");
+    let MinPrice = formData.get("MinPrice");
+    let MaxPrice = formData.get("MaxPrice")
+    let WayOfDestribution = formData.get("WayOfDestribution")
+    let Region = formData.get("Region")
+    let Count = formData.get("Count")
+    let idUser = formData.get("userId")
+
+    let cont = document.getElementById("sup")
+    let loader = document.getElementById("loader")
+    let lidd = document.getElementById("lidd")
+
+    let sip = document.getElementsByClassName("sip");
+
+    if(j%2 == 0){
+        loader.hidden = false;
+        lidd.hidden = false;
+        if(MinPrice ==""){
+            MinPrice=0;
+        }
+        cont.innerHTML=""
+    await fetch(`https://zakupki-edu.site/api/Search?userId=${idUser}&okpd2=${okpd2}&maxPrice=${MaxPrice}&minPrice=${MinPrice}&region=${Region}&count=${Count}&wayOfDestribution=${WayOfDestribution}`
+    )
+    .then(response => {
+    // indicates whether the response is successful (status code 200-299) or not
+        if (!response.ok) {
+            throw new Error(`Request failed with status ${reponse.status}`)
+         }
+         return response.json()
+        })
+    .then(data => {  
+        loader.hidden = true;
+        lidd.hidden = true;  
+  
+        for (let index = 0; index < data.length; index++) {
+            let prov = data[index]
+            
+            let element = cont.appendChild(document.createElement('div'));
+            element.className = "row rang sip";
+            element.setAttribute("data-price", prov.product.price);
+            element.setAttribute("data-rank", prov.rank.toFixed(2))
+
+            let div1 = element.appendChild(document.createElement('div'));
+            div1.className = "col-sm-1";
+            let chek = div1.appendChild(document.createElement('input'));
+            chek.className = "galka2";
+            chek.setAttribute("type", "checkbox")
+            chek.setAttribute("data-email", JSON.stringify({email:[prov.email], namesupply:prov.name, fio:prov.director.surname +" "+ prov.director.name  +" "+ prov.director.patronymic }))
+
+            let div2 = element.appendChild(document.createElement('div'));
+            div2.className = "col-sm-3"
+            let h4_1 = div2.appendChild(document.createElement('h4'));
+            h4_1.className = "name_supply"
+            h4_1.innerText = prov.name
+
+            let div3 = element.appendChild(document.createElement('div'));
+            div3.className = "col-sm-4"
+            let h4_2 = div3.appendChild(document.createElement('h4'));
+            h4_2.className = "name_prod"
+            h4_2.innerText = prov.product.name
+
+            let div4 = element.appendChild(document.createElement('div'));
+            div4.className = "col-sm-2"
+            let h4_3 = div4.appendChild(document.createElement('h4'));
+            h4_3.className = "price_suply"
+            h4_3.innerText = prov.product.price
+
+            let div5 = element.appendChild(document.createElement('div'));
+            div5.className = "col-sm-1"
+            let h4_4 = div5.appendChild(document.createElement('h4'));
+            h4_4.className = "rang_suply"
+            h4_4.innerText = prov.rank.toFixed(2)
+
+            let div6 = element.appendChild(document.createElement('div'));
+            div6.className = "col-sm-1 text-center"
+            let a1 = div6.appendChild(document.createElement('a'))
+            a1.setAttribute("type", "button")
+            a1.className = "btn-primary btn"
+            // Придется потом передавать id
+            a1.setAttribute("href", "/provider");
+            let span = a1.appendChild(document.createElement('span'))
+            span.className = "glyphicon glyphicon-info-sign"  
+            }
+        let galka = document.getElementsByClassName("galka2");
+        for (let index = 0; index < galka.length; index++) {
+            galka[index].addEventListener('change',get_email);
+            
+            }
+        })
+     .catch(error => console.log(error))
+     
+    }
+    j = j+1;
+}
+
+</script>
+
+<script>    
+    function comparatorRank(a, b) {
+            if (Number(a.dataset.rank) < Number(b.dataset.rank))
+                return 1;
+            if (Number(a.dataset.rank) > Number(b.dataset.rank))
+                return -1;
+            return 0;
+        }
+
+        function comparatorPrice(a, b) {
+            if (Number(a.dataset.price) < Number(b.dataset.price))
+                return -1;
+            if (Number(a.dataset.price) > Number(b.dataset.price))
+                return 1;
+            return 0;
+        }
+
+
+        function SortData(what) {
+            let mode = ['rang', 'price'].includes(what) ? what : 'rang';
+            let subjects = document.querySelectorAll("[data-price]");
+            let subjectsArray = Array.from(subjects);
+            let sorted =[]
+
+            if(mode == 'rang'){
+                sorted = subjectsArray.sort(comparatorRank);
+            }
+            else{
+                sorted = subjectsArray.sort(comparatorPrice);
+            }
+           
+            sorted.forEach(e =>
+                document.querySelector("#sup").
+                    appendChild(e));
+        }
+</script>
+
+<script>
+    
+    let missiv = document.getElementsByClassName("galka2");
+    let get_e = document.getElementsByClassName("email_body")[0];
+    function get_email(e){
+        let jspar = JSON.parse(e.target.dataset.email)
+        let emailarr = jspar.email;
+        let namesupply = jspar.namesupply;
+        let fio = jspar.fio;
+        let nams = namesupply +" - " + fio;
+        if(e.target.checked){
+            let name = get_e.appendChild(document.createElement('p') );
+            name.setAttribute("data-namee", nams)
+            name.innerText = nams+":";
+            for (let index = 0; index < emailarr.length; index++) {
+                let element = get_e.appendChild(document.createElement('a') );
+                element.setAttribute("href", "mailto: "+emailarr[index]);
+                element.textContent = emailarr[index];
+                let el_br = get_e.appendChild(document.createElement('br'));
+                el_br.setAttribute("data-ema", emailarr[index])
+                let el_br1 = get_e.appendChild(document.createElement('br'));
+                el_br1.setAttribute("data-ema", emailarr[index])
+            }            
+        }
+        else {
+            get_e.removeChild(document.querySelector(`p[data-namee='`+nams+`']`))
+            for (let index = 0; index < emailarr.length; index++) { 
+                get_e.removeChild(document.querySelector(`a[href='mailto: `+emailarr[index]+`']`))
+                get_e.removeChild(document.querySelector(`br[data-ema='`+emailarr[index]+`']`))
+                get_e.removeChild(document.querySelector(`br[data-ema='`+emailarr[index]+`']`))                    
+            }            
+        }
+    }
+
+    for (let index1 = 0; index1 < missiv.length; index1++) {
+        missiv[index1].addEventListener('change',get_email);        
+    }
+</script>
+
+<script>
+    function search() {
+    let input = document.getElementById("inputSearch");
+    let filter = input.value.toUpperCase();
+
+        for (let j=0; j<19488;j++){
+            let ul = document.getElementById(j);
+            let li = ul.getElementsByTagName("li");
+ 
+            // Перебирайте все элементы списка и скрывайте те, которые не соответствуют поисковому запросу
+            for (let i = 0; i < li.length; i++) {
+                let a = li[i].getElementsByClassName("aaa")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                    let parUl = li[i].parentElement;
+                    while(parUl.id !="0"){
+                        parUl.style.display = "";
+                        parUl = parUl.parentElement;
+                    }
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+    }
+document.addEventListener('keyup', search);
+</script>
+<script>
+    const aContainer = document.getElementsByClassName('aaa');    
+    const inputOkpd = document.getElementById('input1');
+    const inputOkpd2 = document.getElementById('input2');
+
+    for(let i = 0; i < aContainer.length; i++)
+    {
+        aContainer[i].addEventListener('click', function (event) 
+        {
+            inputOkpd.value = event.target.textContent;
+            inputOkpd2.value = event.target.textContent.split(' - ')[0];
+        });     
+    }
+
+</script>
+</body>
+</html>

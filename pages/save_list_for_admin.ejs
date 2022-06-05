@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Подборки</title>
+    <%- include('../partials/head_p'); %>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex-grow: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+
+        .showOrder{
+            margin-left: 40%;
+            
+        }
+
+        .row1{
+            margin-top: 1%;
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-bottom: 1%;
+        } 
+        .name_user_suply {
+            color: #4088BC;
+            font-weight: bold;
+        }
+        .fi{
+            width: 164%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <%- include('../partials/header', {role: role}); %>
+</header>
+
+<main>
+    <div class="container">
+        <h3>Сохраненные подборки поставщиков</h3>
+        <form class="navbar-form navbar-right" action="">
+            <div class="input-group fi">
+                <input type="text" id="inputSearch" class="form-control find fi" placeholder="Фильтрация подборок">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary findbtn" id="search-button" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="order">
+        <div class="row rang first ord row1">
+          <div class="col-sm-1 ">
+              <p>№ подборки</p>
+          </div>
+          <div class="col-sm-6">
+              <p>Название подборки</p>
+          </div>
+          <div class="col-sm-2">
+              <p>Дата создания</p>
+          </div>
+          <div class="col-sm-3"> 
+            <p>Кем создан</p>
+        </div>
+      </div>
+        
+         <%- include('../partials/elem_list_admin.ejs'); %>
+      
+      </div>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+<script>
+    function search() {
+    let input = document.getElementById("inputSearch");
+    let filter = input.value.toUpperCase();
+    let rows = document.getElementsByClassName('row2');
+    let countRows = document.getElementsByClassName('row2').length;
+
+        for (let j=0; j<countRows;j++){
+            let nam_sup = rows[j].getElementsByClassName("name_supply")[0];
+            let nam_u_sup = rows[j].getElementsByClassName("name_user_suply")[0];
+            if(nam_sup.textContent.toUpperCase().indexOf(filter) > -1 || nam_u_sup.textContent.toUpperCase().indexOf(filter) > -1){
+                rows[j].style.display = "";
+            }
+            else{
+                rows[j].style.display = "none";
+            }
+        }
+    }
+document.addEventListener('keyup', search);
+</script>
+</body>
+</html>
